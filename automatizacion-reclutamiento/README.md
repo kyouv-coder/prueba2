@@ -23,16 +23,16 @@ Esta carpeta (`automatizacion-reclutamiento/`) es el **prototipo/bitácora**: aq
 - **Estado:** funcionando — se probó el 17 y 18 de septiembre, creó las carpetas faltantes de Mabel, Yasna, Ignacia y Ema sin intervención.
 - Rutina: `Crear carpeta diaria CVs por reclutadora` (trigger_id `trig_01WDE1rDXW4KCm375pdSoXzy`).
 
-## 3. Automatización DISEÑADA pero pendiente de tu autorización
+## 3. Automatización de reparto diario — ACTIVA (autorizada 2026-09-18)
 
-### Reparto diario de 35 leads por reclutadora
-- **Lógica ya definida:** cada mañana laboral, tomar los siguientes 245 candidatos sin reclutadora asignada (35 × 7 personas), priorizando CDMX/Zona Metro primero, luego Mexicali, luego el resto — mismo criterio que se usó desde el inicio. A cada uno se le asigna `reclutador_asignado`, estado "nueva", y una nota de "asignado automáticamente el <fecha>".
-- **Por qué no está activa todavía:** el sistema de permisos bloqueó la creación de esta rutina automática porque escribe en la base de datos compartida sin supervisión humana en cada corrida (a diferencia de crear una carpeta vacía, esto mueve cientos de registros todos los días). Necesita tu autorización explícita.
-- **Cómo activarla:** dímelo y la creo; o si prefieres control total, puedo dejarte instrucciones para crearla tú mismo desde el panel de Rutinas en claude.ai (ahí puedes revisar y aprobar el permiso de escritura tú mismo al crearla).
-- **Cuánto dura el stock:** con ~14,169 candidatos base aún sin asignar, a 245/día alcanza para ≈ 58 días hábiles (~11-12 semanas) antes de agotarse. La rutina está diseñada para avisarte automáticamente cuando el stock esté por acabarse.
+Rutina: `Reparto diario de leads y CVs por reclutadora` (trigger_id `trig_017p2CRw6yFmWiHF5yqnkSF6`), lunes a viernes 8am hora CDMX.
 
-### Reparto de CVs (documentos, no solo datos)
-- Distinto de los leads: un CV solo puede "repartirse" si existe. Ya sabemos que sí hay volumen real (miles en las carpetas de Drive). La automatización de "20 CV por persona por día" tiene sentido una vez definamos: ¿son CVs que la reclutadora sube ella misma (no se reparten, se registran), o quieres que el sistema le asigne CVs de candidatos que otra persona ya subió? Aclarando esto, la implemento en la misma rutina.
+### Parte A — 35 leads por reclutadora (245/día)
+Toma candidatos base sin `reclutador_asignado`, prioriza CDMX/Zona Metro, luego Mexicali, luego el resto. Asigna 35 a cada una de las 7 reclutadoras, marca estado "nueva" y deja nota con fecha.
+- **Duración del stock:** con ~14,169 candidatos base aún sin asignar, a 245/día alcanza para ≈ 58 días hábiles (~11-12 semanas). La rutina avisa automáticamente cuando el stock esté por agotarse.
+
+### Parte B — hasta 20 CVs por reclutadora (140/día)
+Solo asigna CVs "huérfanos" (con archivo pero sin reclutadora dueña) — no mueve ni reasigna CVs que ya pertenecen a alguien. Como casi todos los CVs actuales ya tienen reclutadora de origen, es normal que esta parte no haga nada la mayoría de los días; se activa sola cuando aparezcan CVs nuevos sin dueño.
 
 ## 4. Limpieza pendiente (no automatizable sin cambio de permisos)
 
